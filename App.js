@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 
 export default function App() {
   const [people, setPeople] = useState([
@@ -14,14 +20,21 @@ export default function App() {
     { name: "black8", id: "8" },
     { name: "black9", id: "9" }
   ]);
+  const handlePress = id => {
+    console.log(id);
+    const newPeople = people.filter(item => item.id !== id);
+    setPeople(newPeople);
+  };
 
   return (
     <View style={styles.container}>
       <FlatList
         keyExtractor={item => item.id}
         data={people}
-        renderItem={({ item: { name } }) => (
-          <Text style={styles.item}>name: {name}</Text>
+        renderItem={({ item: { name, id } }) => (
+          <TouchableOpacity onPress={() => handlePress(id)}>
+            <Text style={styles.item}>name: {name}</Text>
+          </TouchableOpacity>
         )}
       />
     </View>
