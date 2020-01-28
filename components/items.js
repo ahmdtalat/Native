@@ -1,12 +1,22 @@
 import React from "react";
-import { StyleSheet, View, FlatList, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity
+} from "react-native";
 
 export default function Items({ data }) {
   return (
     <View style={styles.list}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <Text style={styles.item}>{item.text}</Text>}
+        renderItem={({ item }) => (
+          <TouchableOpacity>
+            <Text style={styles.item}>{item.text}</Text>
+          </TouchableOpacity>
+        )}
       />
     </View>
   );
@@ -22,8 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee",
     padding: 10,
     marginVertical: 8,
-    borderRadius: 8,
-    textAlign: "center",
+    borderRadius: 14,
     fontSize: 14
   }
 });
