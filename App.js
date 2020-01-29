@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard
+} from "react-native";
 
 import Header from "./components/header";
 import Items from "./components/items";
@@ -28,13 +33,15 @@ export default function App() {
     setTodos(newTodos);
   };
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        <Form add={todo => add(todo)} />
-        <Items data={todos} updateTodo={key => updateTodo(key)} />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          <Form add={todo => add(todo)} />
+          <Items data={todos} updateTodo={key => updateTodo(key)} />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
