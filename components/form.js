@@ -1,41 +1,59 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  TextInput,
+  Text
+} from "react-native";
 
 export default function Form({ add }) {
   const [todo, setTodo] = useState("");
   const handlePress = () => {
-    console.log(todo);
-    add(todo);
-    setTodo("");
+    if (todo.trim() !== "") {
+      add(todo);
+      setTodo("");
+    }
   };
 
   return (
-    <View style={s.container}>
+    <View style={s.form}>
       <TextInput
-        style={s.form}
+        style={s.input}
         placeholder="enter a todo"
         value={todo}
         onChangeText={val => setTodo(val)}
       />
-      <Button style={s.btn} title="Add" onPress={handlePress} />
+      <TouchableOpacity style={s.btn} onPress={handlePress}>
+        <Text style={s.btnText}>Add Todo</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  container: {
-    padding: 10,
+  form: {
     flexDirection: "row",
+    margin: 10,
+    padding: 10,
     justifyContent: "space-between"
   },
-  form: {
-    flex: 4,
-    width: "80%",
+  input: {
+    width: "70%",
     padding: 10,
     borderWidth: 0.5,
     borderRadius: 4
   },
   btn: {
-    marginVertical: "auto"
+    width: "30%",
+    backgroundColor: "#88f",
+    borderRadius: 4
+  },
+  btnText: {
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
+    paddingTop: "15%",
+    letterSpacing: 1
   }
 });

@@ -12,22 +12,27 @@ export default function App() {
     { text: "write a new article on node events", key: "3" }
   ]);
   const add = todo => {
+    const newKey =
+      todos.length === 0
+        ? "1"
+        : (parseInt(todos[todos.length - 1].key) + 1).toString();
     const newTodo = {
       text: todo,
-      key: () => {
-        todos[todos.length - 1].key + 1;
-      }
+      key: newKey
     };
     const newTodos = [...todos, newTodo];
     setTodos(newTodos);
-    todos.forEach(todo => console.log(todo.key));
+  };
+  const updateTodo = key => {
+    const newTodos = todos.filter(todo => todo.key != key);
+    setTodos(newTodos);
   };
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
         <Form add={todo => add(todo)} />
-        <Items data={todos} />
+        <Items data={todos} updateTodo={key => updateTodo(key)} />
       </View>
     </View>
   );

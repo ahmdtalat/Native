@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 export default function Header() {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>My Todos</Text>
+      <Text style={styles.header}>My Blacky Todos</Text>
     </View>
   );
 }
