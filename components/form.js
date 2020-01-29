@@ -4,15 +4,22 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  Text
+  Text,
+  Alert
 } from "react-native";
 
 export default function Form({ add }) {
   const [todo, setTodo] = useState("");
   const handlePress = () => {
-    if (todo.trim() !== "") {
+    if (todo.trim() !== "" && todo.length > 8) {
       add(todo);
       setTodo("");
+    } else {
+      Alert.alert("Ops", "Todo must not be empty", [
+        {
+          text: "Wagdta"
+        }
+      ]);
     }
   };
 
