@@ -27,6 +27,7 @@ export default function Items({ data, updateTodo }) {
 
 const styles = StyleSheet.create({
   list: {
+    flex: 1,
     paddingHorizontal: 20
   },
   item: {
