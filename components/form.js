@@ -12,20 +12,21 @@ import gql from "graphql-tag";
 
 export default function Form({ add }) {
   const [todo, setTodo] = useState("");
-  const [createTodo, { _ }] = useMutation(ADD_TODO, {
-    update(proxy, result) {
-      const data = proxy.readQuery({
-        query: FETCH_TODOS
-      });
-
-      data.getTodos = [result.data.createTodo, ...data.getTodos];
-      proxy.writeQuery({ query: FETCH_TODOS, data });
-    }
-  });
+  const [createTodo, { _ }] = useMutation(ADD_TODO);
 
   const handlePress = () => {
     if (todo.trim() !== "" && todo.length > 8) {
-      createTodo({ variables: { text: todo } });
+      createTodo({
+        variables: { text: todo },
+        update(proxy, result) {
+          const data = proxy.readQuery({
+            query: FETCH_TODOS
+          });
+
+          data.getTodos = [result.data.createTodo, ...data.getTodos];
+          proxy.writeQuery({ query: FETCH_TODOS, data });
+        }
+      });
       setTodo("");
     } else {
       Alert.alert("Ops", "Todo must not be empty", [

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import React from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
   StyleSheet,
@@ -9,12 +9,24 @@ import {
   TouchableOpacity
 } from "react-native";
 
-export default function Items({ updateTodo }) {
+export default function Items() {
   const { data, loading } = useQuery(FETCH_TODOS);
   const todos = data ? data.getTodos : [];
 
+  const [deleteTodo, { _ }] = useMutation(DELETE_TODO);
+
   const hanglePress = key => {
-    updateTodo(key);
+    deleteTodo({
+      variables: { todoId: key },
+      update(proxy) {
+        const data = proxy.readQuery({
+          query: FETCH_TODOS
+        });
+
+        data.getTodos = data.getTodos.filter(todo => todo.id !== key);
+        proxy.writeQuery({ query: FETCH_TODOS, data });
+      }
+    });
   };
   return (
     <View style={styles.list}>
@@ -23,14 +35,16 @@ export default function Items({ updateTodo }) {
           <Text> Loading ...</Text>
         </View>
       )}
-      <FlatList
-        data={todos}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => hanglePress(item.key)}>
-            <Text style={styles.item}>{item.text}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      {todos && (
+        <FlatList
+          data={todos}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => hanglePress(item.id)}>
+              <Text style={styles.item}>{item.text}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 }
@@ -62,5 +76,10 @@ const FETCH_TODOS = gql`
       text
       created
     }
+  }
+`;
+const DELETE_TODO = gql`
+  mutation deleteTodo($todoId: ID!) {
+    deleteTodo(todoId: $todoId)
   }
 `;

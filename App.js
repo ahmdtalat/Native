@@ -19,22 +19,6 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  const add = todo => {
-    const newKey =
-      todos.length === 0
-        ? "1"
-        : (parseInt(todos[todos.length - 1].key) + 1).toString();
-    const newTodo = {
-      text: todo,
-      key: newKey
-    };
-    const newTodos = [...todos, newTodo];
-    setTodos(newTodos);
-  };
-  const updateTodo = key => {
-    const newTodos = todos.filter(todo => todo.key != key);
-    setTodos(newTodos);
-  };
   return (
     <ApolloProvider client={client}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -42,7 +26,7 @@ export default function App() {
           <Header />
           <View style={styles.content}>
             <Form add={todo => add(todo)} />
-            <Items updateTodo={key => updateTodo(key)} />
+            <Items />
           </View>
         </View>
       </TouchableWithoutFeedback>
