@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
@@ -11,14 +11,18 @@ import {
 
 export default function Items({ updateTodo }) {
   const { data, loading } = useQuery(FETCH_TODOS);
-
   const todos = data ? data.getTodos : [];
+
   const hanglePress = key => {
     updateTodo(key);
   };
   return (
     <View style={styles.list}>
-      {loading && <Text style={styles.loading}>Loading ...</Text>}
+      {loading && (
+        <View style={styles.loading}>
+          <Text> Loading ...</Text>
+        </View>
+      )}
       <FlatList
         data={todos}
         renderItem={({ item }) => (
