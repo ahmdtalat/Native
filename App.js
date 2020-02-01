@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -11,7 +11,6 @@ import ApolloClient, { InMemoryCache } from "apollo-boost";
 
 import Header from "./components/header";
 import Items from "./components/items";
-import Form from "./components/form";
 
 const client = new ApolloClient({
   uri: "https://peaceful-dusk-09848.herokuapp.com/",
@@ -25,7 +24,6 @@ export default function App() {
         <View style={styles.container}>
           <Header />
           <View style={styles.content}>
-            <Form add={todo => add(todo)} />
             <Items />
           </View>
         </View>
