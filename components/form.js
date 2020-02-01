@@ -41,7 +41,8 @@ const s = StyleSheet.create({
     width: "70%",
     padding: 10,
     borderWidth: 0.5,
-    borderRadius: 4
+    borderRadius: 4,
+    backgroundColor: "#fff"
   },
   btn: {
     width: "30%",

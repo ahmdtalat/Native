@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -18,11 +18,17 @@ const client = new ApolloClient({
 });
 
 export default function App() {
+  const [mode, setMode] = useState(false);
+
+  const toggleMode = mode => {
+    setMode(mode);
+  };
+
   return (
     <ApolloProvider client={client}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <Header />
+        <View style={!mode ? styles.container : styles.darkContainer}>
+          <Header toggleMode={toggleMode} />
           <View style={styles.content}>
             <Items />
           </View>
@@ -39,6 +45,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1
+  },
+
+  // dark mode styles
+  darkContainer: {
+    flex: 1,
+    backgroundColor: "#222"
   }
 });
 
