@@ -26,6 +26,10 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "description": "",
+    "android": {
+      "package": "com.mine.todo",
+      "versionCode": 1
+    }
   }
 }
