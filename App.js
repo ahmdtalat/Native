@@ -11,9 +11,10 @@ import ApolloClient, { InMemoryCache } from "apollo-boost";
 
 import Header from "./components/header";
 import Items from "./components/items";
+import { API } from "./config";
 
 const client = new ApolloClient({
-  uri: "https://peaceful-dusk-09848.herokuapp.com/",
+  uri: API,
   cache: new InMemoryCache()
 });
 
